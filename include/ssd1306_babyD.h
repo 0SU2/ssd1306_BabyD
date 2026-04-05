@@ -1,4 +1,7 @@
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 
 #include "esp_log.h"
 
@@ -48,9 +51,9 @@
 
 // Hardware Config (pg.31)
 #define OLED_CMD_SET_DISPLAY_START_LINE 0x40
-#define OLED_CMD_SET_SEGMENT_REMAP      0xA1    
+#define OLED_CMD_SET_SEGMENT_REMAP      0xA1
 #define OLED_CMD_SET_MUX_RATIO          0xA8    // follow with 0x3F = 64 MUX
-#define OLED_CMD_SET_COM_SCAN_MODE      0xC8    
+#define OLED_CMD_SET_COM_SCAN_MODE      0xC8
 #define OLED_CMD_SET_DISPLAY_OFFSET     0xD3    // follow with 0x00
 #define OLED_CMD_SET_COM_PIN_MAP        0xDA    // follow with 0x12
 #define OLED_CMD_NOP                    0xE3    // NOP
@@ -75,6 +78,8 @@ typedef struct {
 } ssd1306_t;
 
 void ssd1306_draw_text(ssd1306_t *ssd1306_config, int x, int y, int size, char *text);
+
+void draw_bitmap(ssd1306_t *ssd1306_config, int x, int y, int width, int height, uint8_t *bitmap);
 
 void ssd1306_draw_pixel(ssd1306_t *ssd1306_config, int x, int y);
 
@@ -102,4 +107,4 @@ void ssd1306_send_buff(ssd1306_t *ssd1306_config);
 
 void ssd1306_send_buff_to_page(ssd1306_t *ssd1306_config, uint8_t column, uint8_t page);
 
-void ssd1306_init(i2c_master_bus_handle_t *bus_handle_connect ,ssd1306_t *ssd1306_config, i2c_device_config_t *dev_config);
+esp_err_t ssd1306_init(i2c_master_bus_handle_t *bus_handle_connect ,ssd1306_t *ssd1306_config, i2c_device_config_t *dev_config);
